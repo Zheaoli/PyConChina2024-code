@@ -1,0 +1,61 @@
+[project]
+name = "PyConChina2024-code"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Manjusaka", email = "me@manjusaka.me"},
+]
+dependencies = ["PeachPy @ git+https://github.com/Maratyszcza/PeachPy.git@master", "git+https://github.com/Maratyszcza/PeachPy.git@master", "cffi>=1.17.1", "pytest>=8.3.3"]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pdm.scripts]
+test = "pytest"
+lint = "pre-commit run --all-files"
+
+
+[tool.pytest.ini_options]
+filterwarnings = [
+  "ignore::DeprecationWarning"
+]
+markers = [
+    "network: Tests that require network",
+    "integration: Run with all Python versions",
+    "path: Tests that compare with the system paths",
+    "deprecated: Tests about deprecated features",
+]
+addopts = "-vvv -r aR"
+testpaths = [
+    "tests/",
+]
+pythonpath = [
+    "src/",
+]
+[tool.ruff]
+line-length = 120
+exclude = ["tests/fixtures"]
+target-version = "py38"
+src = ["src"]
+
+[tool.ruff.lint]
+extend-select = [
+  "I",    # isort
+  "B",    # flake8-bugbear
+  "C4",   # flake8-comprehensions
+  "FA",   # flake8-future-annotations
+  "PGH",  # pygrep-hooks
+  "RUF",  # ruff
+  "W",    # pycodestyle
+  "UP",   # pyupgrade
+  "YTT",  # flake8-2020
+]
+extend-ignore = ["B018", "B019", "RUF018"]
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.isort]
+known-first-party = ["pdm"]
+
+[tool.pdm]
+distribution = false
